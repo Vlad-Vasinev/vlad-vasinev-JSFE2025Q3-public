@@ -1,10 +1,27 @@
 
+@font-face {
+  font-family: 'Oswald-Light';
+  src: url('../portfolio/fonts/Oswald/Oswald-Light.woff') format('woff');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Oswald-Regular';
+  src: url('../portfolio/fonts/Oswald/Oswald-Regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
 html, body {
   margin: 0;
   overflow-x: hidden !important;
   font-size: calc(10.6666666667px + 5.3333333333 * (100vw - 1280px) / 640);
   line-height: calc(16px + 8 * (100vw - 1280px) / 640);
   font-weight: 400;
+  font-family: 'Oswald-Regular';
   position: relative;
   scroll-behavior: smooth;
 }
@@ -13,7 +30,6 @@ html {
   box-sizing: border-box;
 }
   
-
 *,
 *::before,
 *::after {
@@ -87,8 +103,6 @@ ul {
   border-bottom: 1px solid #ffffff;
 }
 
-/* calc(12px + 6 * (100vw - 1280px) / 640) */
-
 .decorate-text {
   width: calc(146.6666666667px + 73.3333333333 * (100vw - 1280px) / 640);
   position: absolute;
@@ -122,6 +136,7 @@ ul {
   line-height: calc(88px + 44 * (100vw - 1280px) / 640);
   font-weight: 300;
   color: #ffffff;
+  font-family: 'Oswald-Light';
   text-transform: uppercase;
 }
 
@@ -350,7 +365,6 @@ ul {
   justify-content: space-between;
   padding-top: calc(12px + 6 * (100vw - 1280px) / 640);
   padding-bottom: calc(12px + 6 * (100vw - 1280px) / 640);
-  /* border-bottom: 1px solid #ffffff; */
   border-top: 1px solid #ffffff;
 }
 
