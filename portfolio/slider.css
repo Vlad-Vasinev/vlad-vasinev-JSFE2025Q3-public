@@ -87,3 +87,20 @@
     flex: 0 0 33.333%;
   }
 }
+
+.slider-track {
+  cursor: grab;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+
+.slider-track:active {
+  cursor: grabbing;
+}
+
+.slider-slide {
+  -webkit-touch-callout: none;
+  -webkit-tap-highlight-color: transparent;
+}

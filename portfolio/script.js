@@ -1,3 +1,5 @@
+
+
 document.addEventListener('DOMContentLoaded', function() {
   const accordionHeaders = document.querySelectorAll('.accordion-header');
   
@@ -50,6 +52,14 @@ class MultiSlideSlider {
     this.currentIndex = 0;
     this.maxIndex = this.slides.length - this.slidesPerView;
     
+    this.touchStartX = 0;
+    this.touchEndX = 0;
+    this.isDragging = false;
+    this.startPos = 0;
+    this.currentTranslate = 0;
+    this.prevTranslate = 0;
+    this.animationID = 0;
+    
     this.init();
     this.updateResponsiveSlidesPerView();
     
@@ -64,6 +74,86 @@ class MultiSlideSlider {
     this.scrollAreas.forEach(area => {
       area.addEventListener('click', this.handleScrollAreaClick.bind(this));
     });
+
+    this.addTouchEvents();
+  }
+
+  addTouchEvents() {
+
+    this.track.addEventListener('touchstart', this.touchStart.bind(this));
+    this.track.addEventListener('touchmove', this.touchMove.bind(this));
+    this.track.addEventListener('touchend', this.touchEnd.bind(this));
+    
+    this.track.addEventListener('mousedown', this.touchStart.bind(this));
+    this.track.addEventListener('mousemove', this.touchMove.bind(this));
+    this.track.addEventListener('mouseup', this.touchEnd.bind(this));
+    this.track.addEventListener('mouseleave', this.touchEnd.bind(this));
+    
+    this.track.addEventListener('dragstart', (e) => e.preventDefault());
+  }
+
+  touchStart(e) {
+    if (e.type === 'mousedown') {
+      this.startPos = e.clientX;
+    } else {
+      this.startPos = e.touches[0].clientX;
+    }
+    
+    this.isDragging = true;
+    this.track.style.cursor = 'grabbing';
+    this.track.style.transition = 'none';
+    
+    cancelAnimationFrame(this.animationID);
+  }
+
+  touchMove(e) {
+    if (!this.isDragging) return;
+    
+    e.preventDefault();
+    
+    let currentPos;
+    if (e.type === 'mousemove') {
+      currentPos = e.clientX;
+    } else {
+      currentPos = e.touches[0].clientX;
+    }
+    
+    const currentTranslate = this.prevTranslate + currentPos - this.startPos;
+    
+    const slideWidth = this.track.getBoundingClientRect().width / this.slidesPerView;
+    const maxTranslate = 0;
+    const minTranslate = -this.maxIndex * slideWidth;
+    
+    if (currentTranslate > maxTranslate + 50 || currentTranslate < minTranslate - 50) {
+      return;
+    }
+    
+    this.currentTranslate = currentTranslate;
+    this.track.style.transform = `translateX(${this.currentTranslate}px)`;
+  }
+
+  touchEnd() {
+    if (!this.isDragging) return;
+    
+    this.isDragging = false;
+    this.track.style.cursor = 'grab';
+    this.track.style.transition = 'transform 0.3s ease';
+    
+    const slideWidth = this.track.getBoundingClientRect().width / this.slidesPerView;
+    const movedBy = this.currentTranslate - this.prevTranslate;
+    
+    const threshold = slideWidth * 0.15;
+    
+    if (Math.abs(movedBy) > threshold) {
+      if (movedBy > 0 && this.currentIndex > 0) {
+        this.currentIndex--;
+      } else if (movedBy < 0 && this.currentIndex < this.maxIndex) {
+        this.currentIndex++;
+      }
+    }
+    
+    this.updateSlider();
+    this.prevTranslate = -this.currentIndex * slideWidth;
   }
 
   updateResponsiveSlidesPerView() {
@@ -75,7 +165,12 @@ class MultiSlideSlider {
     } else {
       this.slidesPerView = 5;
     }
-    this.maxIndex = this.slides.length - this.slidesPerView;
+    this.maxIndex = Math.max(0, this.slides.length - this.slidesPerView);
+    
+    const slideWidth = this.track.getBoundingClientRect().width / this.slidesPerView;
+    this.prevTranslate = -this.currentIndex * slideWidth;
+    this.currentTranslate = this.prevTranslate;
+    
     this.updateSlider();
   }
 
@@ -97,16 +192,24 @@ class MultiSlideSlider {
     }
 
     this.updateSlider();
+    
+    const slideWidth = this.track.getBoundingClientRect().width / this.slidesPerView;
+    this.prevTranslate = -this.currentIndex * slideWidth;
+    this.currentTranslate = this.prevTranslate;
   }
 
   updateSlider() {
+    this.currentIndex = Math.max(0, Math.min(this.currentIndex, this.maxIndex));
+    
     const slideWidth = 100 / this.slidesPerView;
     const translateX = this.currentIndex * slideWidth;
     this.track.style.transform = `translateX(-${translateX}%)`;
+    this.track.style.transition = 'transform 0.3s ease';
   }
+
   setSlidesPerView(count) {
     this.slidesPerView = count;
-    this.maxIndex = this.slides.length - this.slidesPerView;
+    this.maxIndex = Math.max(0, this.slides.length - this.slidesPerView);
     
     this.slides.forEach(slide => {
       slide.style.flex = `0 0 ${100 / count}%`;
@@ -119,5 +222,58 @@ class MultiSlideSlider {
 document.addEventListener('DOMContentLoaded', function() {
   const sliderElement = document.querySelector('.slider');
   const slider = new MultiSlideSlider(sliderElement, 5);
-
 });
+
+let newBurger = document.querySelector('.nbl-burger.n-burger_mob')
+let headerSidebar = document.querySelector('.header-sidebar')
+
+newBurger.addEventListener('click', function() {
+
+  if(!this.querySelector('div').classList.contains('burger-item_active')) {
+    this.querySelectorAll('div').forEach(el => {
+      el.classList.add('burger-item_active')
+    });
+    this.classList.add('_active')
+    disableScroll()
+    headerSidebar.classList.add("_opened")
+  }
+  else {
+    this.querySelectorAll('div').forEach(el => {
+      el.classList.remove('burger-item_active')
+    });
+    this.classList.remove('_active')
+    enableScroll()
+    headerSidebar.classList.remove("_opened")
+  }
+})
+
+const disableScroll = () => {
+  const pagePosition = window.scrollY;
+  const paddingOffset = window.innerWidth - document.body.offsetWidth;
+
+  document.documentElement.style.scrollBehavior = 'none';
+  document.body.style.paddingRight = paddingOffset + 'px';
+  document.body.classList.add('dis-scroll');
+  document.body.dataset.position = pagePosition;
+  document.body.style.top = `-${pagePosition}px`;
+}
+
+const enableScroll = () => {
+  const pagePosition = parseInt(document.body.dataset.position, 10);
+  document.body.style.paddingRight = '0px';
+
+  document.documentElement.style.scrollBehavior = 'auto';
+  
+  document.body.style.top = 'auto';
+  document.body.classList.remove('dis-scroll');
+  window.scroll({
+    top: pagePosition,
+    left: 0
+  });
+  
+  setTimeout(() => {
+    document.documentElement.style.scrollBehavior = '';
+  }, 100);
+  
+  document.body.removeAttribute('data-position');
+}
