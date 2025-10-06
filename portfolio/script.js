@@ -1,3 +1,5 @@
+
+
 document.addEventListener('DOMContentLoaded', function() {
   const accordionHeaders = document.querySelectorAll('.accordion-header');
   
@@ -121,3 +123,57 @@ document.addEventListener('DOMContentLoaded', function() {
   const slider = new MultiSlideSlider(sliderElement, 5);
 
 });
+
+let newBurger = document.querySelector('.nbl-burger.n-burger_mob')
+let headerSidebar = document.querySelector('.header-sidebar')
+
+newBurger.addEventListener('click', function() {
+
+  if(!this.querySelector('div').classList.contains('burger-item_active')) {
+    this.querySelectorAll('div').forEach(el => {
+      el.classList.add('burger-item_active')
+    });
+    this.classList.add('_active')
+    disableScroll()
+    headerSidebar.classList.add("_opened")
+  }
+  else {
+    this.querySelectorAll('div').forEach(el => {
+      el.classList.remove('burger-item_active')
+    });
+    this.classList.remove('_active')
+    enableScroll()
+    headerSidebar.classList.remove("_opened")
+  }
+})
+
+const disableScroll = () => {
+  const pagePosition = window.scrollY;
+  const paddingOffset = window.innerWidth - document.body.offsetWidth;
+
+  document.documentElement.style.scrollBehavior = 'none';
+  document.body.style.paddingRight = paddingOffset + 'px';
+  document.body.classList.add('dis-scroll');
+  document.body.dataset.position = pagePosition;
+  document.body.style.top = `-${pagePosition}px`;
+}
+
+const enableScroll = () => {
+  const pagePosition = parseInt(document.body.dataset.position, 10);
+  document.body.style.paddingRight = '0px';
+
+  document.documentElement.style.scrollBehavior = 'auto';
+  
+  document.body.style.top = 'auto';
+  document.body.classList.remove('dis-scroll');
+  window.scroll({
+    top: pagePosition,
+    left: 0
+  });
+  
+  setTimeout(() => {
+    document.documentElement.style.scrollBehavior = '';
+  }, 100);
+  
+  document.body.removeAttribute('data-position');
+}

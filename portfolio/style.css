@@ -465,6 +465,15 @@ ul {
     line-height: 64px;
   }
 
+  .header {
+    align-items: center;
+    padding: 0 20px 0 0;
+  }
+
+  .header__list {
+    display: none;
+  }
+
   .button-scroll {
     display: none;
   }
@@ -477,7 +486,7 @@ ul {
 
   .main {
     flex-direction: column;
-    padding-top: 60px;
+    padding-top: 120px;
   }
 
   .main__info-el p {
