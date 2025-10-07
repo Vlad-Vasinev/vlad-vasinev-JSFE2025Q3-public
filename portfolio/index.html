@@ -19,19 +19,19 @@
         </div>
         <ul class="header__list">
           <li class="header__list-el">
-            <a href="#">about me</a>
+            <a href="#target-section">about me</a>
           </li>
           <li class="header__list-el">
-            <a href="#">portfolio</a>
+            <a href="#portfolio-section">portfolio</a>
           </li>
           <li class="header__list-el">
-            <a href="#">price</a>
+            <a href="#price-section">price</a>
           </li>
           <li class="header__list-el">
-            <a href="#">faq</a>
+            <a href="#faq-section">faq</a>
           </li>
           <li class="header__list-el">
-            <a href="#">contacts</a>
+            <a href="#contacts-section">contacts</a>
           </li>
         </ul>
         <div class="nbl-burger n-burger_mob hamburger">
@@ -42,11 +42,11 @@
       </header>
       <div class="header-sidebar">
         <div class="header-sidebar__list">
-          <a class="" href="#">about me</a>
-          <a class="" href="#">portfolio</a>
-          <a class="" href="#">price</a>
-          <a class="" href="#">faq</a>
-          <a class="" href="#">contacts</a>
+          <a class="" href="#target-section">about me</a>
+          <a class="" href="#portfolio-section">portfolio</a>
+          <a class="" href="#price-section">price</a>
+          <a class="" href="#faq-section">faq</a>
+          <a class="" href="#contacts-section">contacts</a>
         </div>
       </div>
       <div class="main">
@@ -110,7 +110,7 @@
       </div>
     </div>
 
-    <div class="page-block">
+    <div class="page-block" id="portfolio-section">
       <div class="slider-wrapper">
         <div class="slider-wrapper__info">
           <h2 class="h2">my portfolio</h2>
@@ -164,7 +164,7 @@
       </div>
     </div>
 
-    <div class="page-block">
+    <div class="page-block" id="price-section">
       <div class="packages">
         <h2 class="h2">Packages & Pricing</h2>
         <p>Choose the package that suits your story. All options are customizable to your needs.</p>
@@ -333,22 +333,28 @@
       </div>
     </div>
 
-    <div class="page-block">
+    <div class="page-block" id="faq-section">
       <div class="accordeon">
         <div class="accordeon__left">
           <h2 class="h2">Frequently Asked Questions</h2>
           <p>Everything You Wanted to Ask (and a Bit More)</p>
         </div>
         <div class="accordeon__block">
-          <h3 class="h3">How do I book a shoot?</h3>
-          <p>
-            Super simple – just message me through any convenient
-            platform (Instagram, Telegram, WhatsApp, or the contact
-            form on this site). We’ll discuss your preferred date,
-            city, and session type. Once confirmed, I’ll reserve
-            the date for you and send over preparation tips.
-          </p>
-          <div class="accordion-item first active">
+          <div class="accordion-item first active" id="0">
+            <div class="accordion-header">
+              <h3 class="h3">How do I book a shoot?</h3>
+              <img src="../portfolio/images/icons/plus.svg" alt="plus">
+            </div>
+            <div class="accordion-content">
+              <p>
+                Super simple – just message me through any convenient platform
+                (Instagram, Telegram, WhatsApp, or the contact form on this site).
+                We’ll discuss your preferred date, city, and session type. Once confirmed,
+                I’ll reserve the date for you and send over preparation tips.
+              </p>
+            </div>
+          </div>
+          <div class="accordion-item" id="1">
             <div class="accordion-header">
               <h3 class="h3">Can I choose the location myself?</h3>
               <img src="../portfolio/images/icons/plus.svg" alt="plus">
@@ -362,7 +368,7 @@
               </p>
             </div>
           </div>
-          <div class="accordion-item">
+          <div class="accordion-item" id="2">
             <div class="accordion-header">
               <h3 class="h3">How long does the shoot take?</h3>
               <img src="../portfolio/images/icons/plus.svg" alt="plus">
@@ -376,7 +382,7 @@
               </p>
             </div>
           </div>
-          <div class="accordion-item">
+          <div class="accordion-item" id="3">
             <div class="accordion-header">
               <h3 class="h3">When will I receive the photos?</h3>
               <img src="../portfolio/images/icons/plus.svg" alt="plus">
@@ -390,7 +396,7 @@
               </p>
             </div>
           </div>
-          <div class="accordion-item">
+          <div class="accordion-item" id="4">
             <div class="accordion-header">
               <h3 class="h3">Will you help me pose?</h3>
               <img src="../portfolio/images/icons/plus.svg" alt="plus">
@@ -404,7 +410,7 @@
               </p>
             </div>
           </div>
-          <div class="accordion-item">
+          <div class="accordion-item" id="5">
             <div class="accordion-header">
               <h3 class="h3">What should I wear?</h3>
               <img src="../portfolio/images/icons/plus.svg" alt="plus">
@@ -418,7 +424,7 @@
               </p>
             </div>
           </div>
-          <div class="accordion-item">
+          <div class="accordion-item" id="6">
             <div class="accordion-header">
               <h3 class="h3">Do you retouch the photos?</h3>
               <img src="../portfolio/images/icons/plus.svg" alt="plus">
@@ -432,7 +438,7 @@
               </p>
             </div>
           </div>
-          <div class="accordion-item">
+          <div class="accordion-item" id="7">
             <div class="accordion-header">
               <h3 class="h3">Can I get the raw files?</h3>
               <img src="../portfolio/images/icons/plus.svg" alt="plus">
@@ -450,7 +456,7 @@
       </div>
     </div>
 
-    <div class="page-block">
+    <div class="page-block" id="contacts-section">
       <div class="form-block">
         <h3 class="h3">Like my portfolio? Sign up for a shoot!</h3>
         <form>

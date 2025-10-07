@@ -2,12 +2,32 @@
 
 document.addEventListener('DOMContentLoaded', function() {
   const accordionHeaders = document.querySelectorAll('.accordion-header');
+
+  const savedActiveItemId = localStorage.getItem('activeAccordionItem');
+  if (savedActiveItemId) {
+    const savedItem = document.getElementById(savedActiveItemId);
+    if (savedItem) {
+      accordionHeaders.forEach(header => {
+        header.parentElement.classList.remove('active');
+      });
+      savedItem.classList.add('active');
+    }
+  }
   
   accordionHeaders.forEach(header => {
     header.addEventListener('click', function() {
       const item = this.parentElement;
+      const isCurrentlyActive = item.classList.contains('active');
       
-      item.classList.toggle('active');
+      accordionHeaders.forEach(otherHeader => {
+        otherHeader.parentElement.classList.remove('active');
+      });
+      
+      if (!isCurrentlyActive) {
+        item.classList.add('active');
+      }
+      
+      localStorage.setItem('activeAccordionItem', item.id);
     });
   });
 });
@@ -20,18 +40,21 @@ openModalBtns.forEach(button => {
   button.addEventListener('click', function() {
     modal.style.display = 'flex';
     document.body.style.overflow = 'hidden';
+    disableScroll()
   });
 });
 
 modalClose.addEventListener('click', function() {
   modal.style.display = 'none';
   document.body.style.overflow = 'auto';
+  enableScroll()
 });
 
 modal.addEventListener('click', function(e) {
   if (e.target === modal) {
     modal.style.display = 'none';
     document.body.style.overflow = 'auto';
+    enableScroll()
   }
 });
 
@@ -39,6 +62,7 @@ document.addEventListener('keydown', function(e) {
   if (e.key === 'Escape' && modal.style.display === 'flex') {
     modal.style.display = 'none';
     document.body.style.overflow = 'auto';
+    enableScroll()
   }
 });
 
@@ -246,6 +270,19 @@ newBurger.addEventListener('click', function() {
     headerSidebar.classList.remove("_opened")
   }
 })
+
+if(window.innerWidth <= 768) {
+  document.querySelectorAll('.header-sidebar__list a').forEach((el) => {
+    el.addEventListener('click', () => {
+      enableScroll()
+      newBurger.classList.remove('_active')
+      headerSidebar.classList.remove("_opened")
+      newBurger.querySelectorAll('div').forEach((el) => {
+        el.classList.remove('burger-item_active')
+      })
+    })
+  })
+}
 
 const disableScroll = () => {
   const pagePosition = window.scrollY;
